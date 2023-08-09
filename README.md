@@ -1,5 +1,6 @@
 # OpenStudioIDE
 welcome to the repository dedicated to the built in house IDE for OpenStudio!
+please note that this software is stil in development
 
 Overview
 Welcome to OpenStudioIDE, an in-house developed Integrated Development Environment (IDE) designed to provide a unique and powerful coding experience tailored to your needs. OpenStudioIDE has been crafted to address specific feature gaps found in other popular IDEs like Visual Studio and JetBrains Rider, offering a fresh approach to software development.
