@@ -45,6 +45,7 @@ namespace OpenStudioIDE
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             
+            
 
         }
         //private void Build_Click(object sender, RoutedEventArgs e)

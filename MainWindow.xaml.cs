@@ -13,12 +13,15 @@ using System.Diagnostics;
 using System;
 using Microsoft.Build.Exceptions;
 using Microsoft.Build.Framework;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace OpenStudioIDE
 {
     public partial class MainWindow : Window
     {
         private string selectedSolutionFilePath; // Store the selected .sln file path here
+        private string selectedFilePath;
         private string recentProjectsFilePath = "recient.txt";
         public bool LoadedProject { get; private set; }
 
@@ -26,8 +29,7 @@ namespace OpenStudioIDE
         {
             InitializeComponent();
             // Show the welcome window
-            Window1 welcomeWindow = new Window1();
-            welcomeWindow.ShowDialog();
+           
 
             LoadRecentProjects();
 
@@ -62,15 +64,17 @@ namespace OpenStudioIDE
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "seesharp files (*.cs)|*.cs| window files (*.xaml)|*.xaml| snake files (*.py)|*.py "; // Set the filter
-            saveFileDialog.DefaultExt = ".cs";
-            if (saveFileDialog.ShowDialog() == true)
+            if (!string.IsNullOrEmpty(selectedFilePath))
             {
-                string filePath = saveFileDialog.FileName;
-                File.WriteAllText(filePath, txtEditor.Text);
+                File.WriteAllText(selectedFilePath, txtEditor.Text);
+            }
+            else
+            {
+                // Handle the case when no file is selected (optional)
+                MessageBox.Show("Please select a file before saving.", "No File Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
@@ -129,6 +133,21 @@ namespace OpenStudioIDE
                 MessageBox.Show("Please select a .sln file before building.", "No .sln File Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Save_Click(sender, e);
+        }
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.S && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                Save_Click(sender, e);
+                e.Handled = true; // Mark the event as handled to prevent further processing
+            }
+        }
+
+
+
         private void LoadRecentProjects()
         {
             if (File.Exists(recentProjectsFilePath))
@@ -143,12 +162,12 @@ namespace OpenStudioIDE
 
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            var dialog = new OpenFileDialog();
 
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() == true)
             {
                 // Get the selected folder path
-                string folderPath = dialog.SelectedPath;
+                string folderPath = Path.GetDirectoryName(dialog.FileName);
 
                 // Display folder contents in the ListBox
                 DisplayFolderContents(folderPath);
@@ -161,16 +180,25 @@ namespace OpenStudioIDE
             lstFolderContents.Items.Clear();
 
             // Get the files and folders in the selected folder
-            string[] files = Directory.GetFiles(folderPath);
-            string[] folders = Directory.GetDirectories(folderPath);
+            string[] filePaths = Directory.GetFiles(folderPath);
+            string[] folderPaths = Directory.GetDirectories(folderPath);
 
-            // Add files and folders to the ListBox
-            lstFolderContents.Items.Add(files);
-            lstFolderContents.Items.Add(folders);
+            // Add folders to the ListBox
+            foreach (string folder in folderPaths)
+            {
+                string folderName = System.IO.Path.GetFileName(folder);
+                lstFolderContents.Items.Add(new FileSystemItem(folderName, folder));
+            }
+
+            // Add files to the ListBox
+            foreach (string file in filePaths)
+            {
+                string fileName = System.IO.Path.GetFileName(file);
+                lstFolderContents.Items.Add(new FileSystemItem(fileName, file));
+            }
         }
 
-
-        private void SaveRecentProject(string projectPath)
+            private void SaveRecentProject(string projectPath)
         {
             // Save all recent project paths to the text file
             
@@ -183,6 +211,21 @@ namespace OpenStudioIDE
         {
 
         }
+        private void lstFolderContents_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstFolderContents.SelectedItem != null)
+            {
+                FileSystemItem selectedItem = lstFolderContents.SelectedItem as FileSystemItem;
+
+                if (selectedItem != null && File.Exists(selectedItem.Path))
+                {
+                    selectedFilePath = selectedItem.Path; // Store the selected file path
+                    string fileContent = File.ReadAllText(selectedItem.Path);
+                    txtEditor.Text = fileContent;
+                }
+            }
+        }
+
         public void BuildSolution(string solutionFilePath)
         {
             try
