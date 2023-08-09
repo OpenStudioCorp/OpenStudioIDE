@@ -1,18 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace OpenStudioIDE
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
-        
+        public bool LoadedProject { get; private set; }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // Show the welcome window
+            Window1 welcomeWindow = new Window1();
+            welcomeWindow.ShowDialog();
+
+            // Check if the user chose to load or create a project
+            if (welcomeWindow.LoadedProject)
+            {
+                // Create and show the main window
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
+            else
+            {
+                // Exit the application if the user didn't choose to load a project
+                Shutdown();
+            }
+        }
     }
 }

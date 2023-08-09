@@ -4,19 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Welcome!" Height="450" Width="800">
+        Title="Welcome!" Height="450" Width="800" Background="#FF90DEFF">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <ListBox d:ItemsSource="{d:Binding recentprojects}" Margin="0,29,480,0"/>
-        <Menu Margin="0,0,0,410"/>
-        <Button Content="create" HorizontalAlignment="Left" Margin="540,54,0,0" VerticalAlignment="Top"/>
-        <Button Content="create" HorizontalAlignment="Left" Margin="540,134,0,0" VerticalAlignment="Top"/>
-        <Button Content="create" HorizontalAlignment="Left" Margin="540,212,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="lstRecentProjects" Margin="0,29,480,0" Background="#FF5885F1"/>
+        <Menu Margin="0,0,0,410" Background="#FFFF6464"/>
+        <Button Content="create" Click="consoleapp_Click" HorizontalAlignment="Left" Margin="540,54,0,0" VerticalAlignment="Top"/>
+        <Button Content="create" Click="WPFapp_Click" HorizontalAlignment="Left" Margin="540,134,0,0" VerticalAlignment="Top"/>
+        <Button Content="create" Click="WPFapp_Click" HorizontalAlignment="Left" Margin="540,212,0,0" VerticalAlignment="Top"/>
         <Button Content="Unused" HorizontalAlignment="Left" Margin="540,294,0,0" VerticalAlignment="Top"/>
-        <Button Content="Unused" HorizontalAlignment="Left" Margin="540,374,0,0" VerticalAlignment="Top"/>
+        <Button Content="load" Click="load_Click" HorizontalAlignment="Left" Margin="340,374,0,0" VerticalAlignment="Top"/>
         <Label Content="Console app c#" HorizontalAlignment="Left" Margin="585,51,0,0" VerticalAlignment="Top" Width="205"/>
         <Label Content="WPF app c#&#xD;&#xA;" HorizontalAlignment="Left" Margin="585,134,0,0" VerticalAlignment="Top" Width="205"/>
         <Label Content="Python app " HorizontalAlignment="Left" Margin="580,209,0,0" VerticalAlignment="Top" Width="210"/>
+
+
 
     </Grid>
 </Window>

@@ -1,7 +1,8 @@
-﻿<Window x:Class="OpenStudioIDE.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="OpenStudioIDE" Height="450" Width="800">
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="OpenStudioIDE.MainWindow"
+        Title="OpenStudioIDE" Height="450" Width="960">
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -10,10 +11,12 @@
                 <MenuItem Header="_Save" Click="Save_Click"/>
                 <MenuItem Header="_code" Click="CheckCode_Click"/>
                 <MenuItem Header="_build" Click="Build_Click"/>
+                <MenuItem Header="_openfolder" Click="OpenFolder_Click"></MenuItem>
                 <Separator/>
                 <MenuItem Header="_Exit" Click="Exit_Click"/>
             </MenuItem>
-        </Menu> 
-        <TextBox x:Name="txtEditor" TextWrapping="Wrap" AcceptsReturn="True"/>
+        </Menu>
+        <TextBox x:Name="txtEditor" TextWrapping="Wrap" AcceptsReturn="True" Width="800" HorizontalAlignment="Left"/>
+        <ListBox Width="148" Name="lstFolderContents" Height="420"/>
     </DockPanel>
 </Window> 

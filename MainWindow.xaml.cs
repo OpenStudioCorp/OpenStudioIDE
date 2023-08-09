@@ -20,12 +20,17 @@ namespace OpenStudioIDE
     {
         private string selectedSolutionFilePath; // Store the selected .sln file path here
         private string recentProjectsFilePath = "recient.txt";
+        public bool LoadedProject { get; private set; }
 
         public MainWindow()
         {
             InitializeComponent();
+            // Show the welcome window
+            Window1 welcomeWindow = new Window1();
+            welcomeWindow.ShowDialog();
+
             LoadRecentProjects();
-            
+
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -131,15 +136,44 @@ namespace OpenStudioIDE
                 // Read recent project paths from the text file
                 var recentProjects = File.ReadAllLines(recentProjectsFilePath);
 
-                // Add recent project paths to the ListBox
+                // Clear the ListBox and add recent project paths
                 
             }
         }
 
+        private void OpenFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                // Get the selected folder path
+                string folderPath = dialog.SelectedPath;
+
+                // Display folder contents in the ListBox
+                DisplayFolderContents(folderPath);
+            }
+        }
+
+        private void DisplayFolderContents(string folderPath)
+        {
+            // Clear the ListBox
+            lstFolderContents.Items.Clear();
+
+            // Get the files and folders in the selected folder
+            string[] files = Directory.GetFiles(folderPath);
+            string[] folders = Directory.GetDirectories(folderPath);
+
+            // Add files and folders to the ListBox
+            lstFolderContents.Items.Add(files);
+            lstFolderContents.Items.Add(folders);
+        }
+
+
         private void SaveRecentProject(string projectPath)
         {
-            // Save the recent project path to the text file
-            File.AppendAllText(recentProjectsFilePath, $"{projectPath}{Environment.NewLine}");
+            // Save all recent project paths to the text file
+            
 
             // Reload the recent projects list
             LoadRecentProjects();
