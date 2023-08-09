@@ -115,6 +115,16 @@ namespace OpenStudioIDE
                 // Code is error-free, you can provide some feedback to the user.
             }
         }
+        private void lstFolderContents_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            FileSystemItem selectedItem = lstFolderContents.SelectedItem as FileSystemItem;
+            if (selectedItem != null && selectedItem.IsFolder)
+            {
+                // Navigate into the selected folder
+                DisplayFolderContents(selectedItem.Path);
+            }
+        }
+
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -176,29 +186,37 @@ namespace OpenStudioIDE
 
         private void DisplayFolderContents(string folderPath)
         {
-            // Clear the ListBox
             lstFolderContents.Items.Clear();
 
-            // Get the files and folders in the selected folder
-            string[] filePaths = Directory.GetFiles(folderPath);
-            string[] folderPaths = Directory.GetDirectories(folderPath);
-
-            // Add folders to the ListBox
-            foreach (string folder in folderPaths)
+            if (!string.IsNullOrEmpty(folderPath))
             {
-                string folderName = System.IO.Path.GetFileName(folder);
-                lstFolderContents.Items.Add(new FileSystemItem(folderName, folder));
-            }
+                // Add the ".." item to navigate back to the parent folder
+                string parentFolderPath = Directory.GetParent(folderPath)?.FullName;
+                lstFolderContents.Items.Add(new FileSystemItem("..", parentFolderPath, true));
 
-            // Add files to the ListBox
-            foreach (string file in filePaths)
-            {
-                string fileName = System.IO.Path.GetFileName(file);
-                lstFolderContents.Items.Add(new FileSystemItem(fileName, file));
+                // Get the files and folders in the selected folder
+                string[] filePaths = Directory.GetFiles(folderPath);
+                string[] folderPaths = Directory.GetDirectories(folderPath);
+
+                // Add folders to the ListBox
+                foreach (string folder in folderPaths)
+                {
+                    string folderName = System.IO.Path.GetFileName(folder);
+                    lstFolderContents.Items.Add(new FileSystemItem(folderName, folder, true));
+                }
+
+                // Add files to the ListBox
+                foreach (string file in filePaths)
+                {
+                    string fileName = System.IO.Path.GetFileName(file);
+                    lstFolderContents.Items.Add(new FileSystemItem(fileName, file, false));
+                }  
             }
         }
 
-            private void SaveRecentProject(string projectPath)
+
+
+        private void SaveRecentProject(string projectPath)
         {
             // Save all recent project paths to the text file
             

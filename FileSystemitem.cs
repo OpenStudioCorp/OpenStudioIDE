@@ -6,11 +6,13 @@ namespace OpenStudioIDE
     {
         public string Name { get; set; }
         public string Path { get; set; }
+        public bool IsFolder { get; set; }
 
-        public FileSystemItem(string name, string path)
+        public FileSystemItem(string name, string path, bool isFolder)
         {
             Name = name;
             Path = path;
+            IsFolder = isFolder;
         }
 
         public override string ToString()
