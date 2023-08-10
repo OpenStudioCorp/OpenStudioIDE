@@ -1,10 +1,12 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace OpenStudioIDE
 {
     public partial class App : Application
     {
+
+        private string folderPath;
+
         public bool LoadedProject { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -18,7 +20,7 @@ namespace OpenStudioIDE
             if (welcomeWindow.LoadedProject)
             {
                 // Create and show the main window
-                MainWindow mainWindow = new MainWindow();
+                MainWindow mainWindow = new MainWindow(folderPath);
                 mainWindow.Show();
             }
             else

@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Windows;
+﻿using Microsoft.Build.Exceptions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
-using Microsoft.Build.Locator;
-using Microsoft.Build.Logging;
-using Microsoft.Build.Execution;
-using System.Linq;
 using Microsoft.Win32;
-using System.Diagnostics;
 using System;
-using Microsoft.Build.Exceptions;
-using Microsoft.Build.Framework;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -24,12 +20,13 @@ namespace OpenStudioIDE
         private string selectedFilePath;
         private string recentProjectsFilePath = "recient.txt";
         public bool LoadedProject { get; private set; }
-
-        public MainWindow()
+        private string selectedFolderPath;
+        public MainWindow(string folderPath)
         {
             InitializeComponent();
             // Show the welcome window
-           
+            selectedFolderPath = folderPath;
+            DisplayFolderContents(selectedFolderPath);
 
             LoadRecentProjects();
 
@@ -166,7 +163,7 @@ namespace OpenStudioIDE
                 var recentProjects = File.ReadAllLines(recentProjectsFilePath);
 
                 // Clear the ListBox and add recent project paths
-                
+
             }
         }
 
@@ -210,7 +207,7 @@ namespace OpenStudioIDE
                 {
                     string fileName = System.IO.Path.GetFileName(file);
                     lstFolderContents.Items.Add(new FileSystemItem(fileName, file, false));
-                }  
+                }
             }
         }
 
@@ -219,7 +216,7 @@ namespace OpenStudioIDE
         private void SaveRecentProject(string projectPath)
         {
             // Save all recent project paths to the text file
-            
+
 
             // Reload the recent projects list
             LoadRecentProjects();
