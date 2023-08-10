@@ -79,7 +79,7 @@ namespace OpenStudioIDE
         }
         private void Python_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show("this feature is not in the code yet, you can create a python project jsut by making a folder with a python script and opening the folder in the main ide");
+            System.Windows.MessageBox.Show("this feature is not in the code yet, you can create a python project just by making a folder with a python script and opening the folder in the main ide");
         }
         private void load_Click(object sender, RoutedEventArgs e)
         {

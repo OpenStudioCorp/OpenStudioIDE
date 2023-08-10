@@ -17,6 +17,7 @@
                 <MenuItem Header="_openfolder" Click="OpenFolder_Click"></MenuItem>
                 <Separator/>
                 <MenuItem Header="_Exit" Click="Exit_Click"/>
+                <MenuItem Header="_shell" Click="MenuItem_Click_1"/>
             </MenuItem>
         </Menu>
         <TextBox x:Name="txtEditor" TextWrapping="Wrap" AcceptsReturn="True" Width="800" HorizontalAlignment="Left" Background="#FFD8D8D8"/>
