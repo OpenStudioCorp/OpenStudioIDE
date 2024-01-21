@@ -9,17 +9,27 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Menu Margin="0,0,0,410" Background="#Fc6f">
+            <MenuItem Header="File">
+                <MenuItem Header="New Project" Click="new_Click"/>
+                <MenuItem Header="Open Project" Click="open_Click"/>
+                <MenuItem Header="Save Project" Click="save_Click"/>
+                <MenuItem Header="Save Project As" Click="saveas_Click"/>
+                <MenuItem Header="Exit" Click="exit_Click"/>
 
-        <ListBox x:Name="lstRecentProjects" Margin="0,29,480,0" Background="#FF5885F1"/>
-        <Menu Margin="0,0,0,410" Background="#FFFF6464"/>
-        <Button Content="create" Click="consoleapp_Click" HorizontalAlignment="Left" Margin="540,54,0,0" VerticalAlignment="Top"/>
-        <Button Content="create" Click="WPFapp_Click" HorizontalAlignment="Left" Margin="540,134,0,0" VerticalAlignment="Top"/>
-        <Button Content="create" Click="WPFapp_Click" HorizontalAlignment="Left" Margin="540,212,0,0" VerticalAlignment="Top"/>
-        <Button Content="Unused" HorizontalAlignment="Left" Margin="540,294,0,0" VerticalAlignment="Top"/>
-        <Button Content="load" Click="load_Click" HorizontalAlignment="Left" Margin="340,374,0,0" VerticalAlignment="Top"/>
-        <Label Content="Console app c#" HorizontalAlignment="Left" Margin="585,51,0,0" VerticalAlignment="Top" Width="205"/>
-        <Label Content="WPF app c#&#xD;&#xA;" HorizontalAlignment="Left" Margin="585,134,0,0" VerticalAlignment="Top" Width="205"/>
-        <Label Content="Python app " HorizontalAlignment="Left" Margin="580,209,0,0" VerticalAlignment="Top" Width="210"/>
+                <MenuItem Header="Console">
+                    <MenuItem Header="Open" Click="OpenConsole_Click"/>
+                </MenuItem>
+            </MenuItem>
+
+        </Menu>
+        <Button Content="Start" Click="load_Click" HorizontalAlignment="Center" Margin="0,384,0,0" VerticalAlignment="Top" Width="88" Height="50"/>
+        <Label Content="Welcome to OpenStudio IDE!" HorizontalAlignment="Center" Margin="0,24,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Light"/>
+        <Label Content="Please select a project to open:" HorizontalAlignment="Center" Margin="0,72,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Light"/>
+        <Label Content="Or create a new one:" HorizontalAlignment="Center" Margin="0,192,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Light"/>
+        <Button Content="New Project" Click="new_Click" HorizontalAlignment="Center" Margin="0,224,0,0" VerticalAlignment="Top" Width="170" Height="30"/>
+        <Button Content="Open Project" Click="open_Click" HorizontalAlignment="Center" Margin="0,104,0,0" VerticalAlignment="Top" Width="200" Height="25"/>
+
 
 
 

@@ -116,31 +116,137 @@ namespace OpenStudioIDE
                 }
             }
         }
-
-
-
-
-        //private void Build_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-        //private void Build_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-        private void LoadRecentProjects()
+        private void OpenConsole_Click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(recentProjectsFilePath))
+            Window2 window2 = new Window2();
+            window2.Show();
+        }   
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void open_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void save_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void new_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                // Read recent project paths from the text file
-                var recentProjects = File.ReadAllLines(recentProjectsFilePath);
+                folderPath = dialog.SelectedPath;
+                if (!string.IsNullOrEmpty(folderPath))
+                {
+                    try
+                    {
+                        Window3 window3 = new Window3(folderPath);
+                        window3.Show();
+                    }
 
-                // Clear the ListBox and add recent project paths
-                lstRecentProjects.Items.Clear();
-                lstRecentProjects.Items.Add(recentProjects);
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions if the process fails to start
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    // Handle the case where no folder was selected
+                }
+
+            }
+            
+        }
+        private void saveas_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void NewProject(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                folderPath = dialog.SelectedPath;
+                if (!string.IsNullOrEmpty(folderPath))
+                {
+                    try
+                    {
+                        Window3 window3 = new Window3(folderPath);
+                        window3.Show();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions if the process fails to start
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    // Handle the case where no folder was selected
+                }
+
+            }
+            }
+        private void OpenProject_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                folderPath = dialog.SelectedPath;
+
+                if (!string.IsNullOrEmpty(folderPath))
+                {
+                    try
+                    {
+                        
+        
+                        MainWindow mainWindow = new MainWindow(folderPath);
+                        mainWindow.Show();
+
+                        // Close the Welcome Window
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions if the process fails to start
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    // Handle the case where no folder was selected
+                }
             }
         }
+
+
+        //private void Build_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+        //private void Build_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+        //private void LoadRecentProjects()
+        //{
+        //    if (File.Exists(recentProjectsFilePath))
+        //    {
+        //        // Read recent project paths from the text file
+        //        var recentProjects = File.ReadAllLines(recentProjectsFilePath);
+
+        //        // Clear the ListBox and add recent project paths
+        //        lstRecentProjects.Items.Clear();
+        //        lstRecentProjects.Items.Add(recentProjects);
+        //    }
+        //}
 
 
 
